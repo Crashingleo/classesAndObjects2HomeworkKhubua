@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Book {
     private String name;
     // private ограничивает доступ к имени из вне. Объявление имени книги в классе Book.
@@ -36,18 +38,23 @@ public class Book {
         this.author = author;
     }
 
-    public boolean equals(Object other) {
-        if(this.getClass() != other.getClass()){
-            return false;
-        }
-        Book idiot = (Book) other;
-        return name.equals(idiot.name);
-    }
-    public int hashCode() {
-        return java.util.Objects.hash(name);
-    }
+
+
+
     public String toString(){
-        return "Название -  " + name + " Год - " + year + " Автор " + author;
+        return "Название -   " + name + " Год - " + year + " Автор " + author;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return year == book.year && Objects.equals(name, book.name) && Objects.equals(author, book.author);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, year, author);
+    }
 }
